@@ -1,1 +1,0 @@
-// Jcrop and jquery

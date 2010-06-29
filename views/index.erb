@@ -1,0 +1,70 @@
+<html>
+	<head>
+
+		<script src="/javascripts/jquery.min.js"></script>
+		<script src="/javascripts/jquery.Jcrop.js"></script>
+		<link rel="stylesheet" href="/stylesheets/jquery.Jcrop.css" type="text/css" />
+		<link rel="stylesheet" href="/stylesheets/demos.css" type="text/css" />
+		
+	</head>
+
+	<body>
+		<div id="outer">
+		<div class="jcExample">
+		<div class="article">
+
+			<script type="text/javascript" charset="utf-8">
+      $(function() {
+        $('#cropbox').Jcrop({
+          onChange: update_crop,
+          onSelect: update_crop,
+          setSelect: [0, 0, 500, 500],
+          aspectRatio: 2.105,
+          minSize: [200, 95]
+        });
+        $('#image_location').val($("#cropbox").attr("src"));
+        $('#resize_info').val("200x95!");
+        
+        $("#crop_form").submit(function() {
+          $.getJSON(this.action + "?callback=cropComplete", $(this).serialize());
+          return false;
+          }) 
+      });
+
+      function update_crop(coords) {
+        $("#crop_x").val(Math.round(coords.x));
+        $("#crop_y").val(Math.round(coords.y));
+        $("#crop_w").val(Math.round(coords.w));
+        $("#crop_h").val(Math.round(coords.h));
+      }
+      
+      function cropComplete(json) {
+        $("#crop_result_image").attr("src", json);
+        $("#crop_result").show();
+      }
+      
+      </script>
+
+      
+      <img src="http://localhost:9393/images/flowers.jpg" id="cropbox" />
+
+      <form method="post" action="http://localhost:9393/crop" id="crop_form">
+        <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+          <input type="hidden" name="<%= attribute %>" value="" id="<%= attribute %>">
+        <% end %>
+        <input type="hidden" name="image_location" id="image_location">
+        <input type="hidden" name="resize_info" id="resize_info">
+        <p><input type="submit" value="Crop"></p>
+      </form>
+      
+      
+      <div id="crop_result" style="display:none">
+        <img src="" id="crop_result_image" />
+      </div>
+      
+
+		</div>
+		</div>
+		</div>
+	</body>
+</html>
