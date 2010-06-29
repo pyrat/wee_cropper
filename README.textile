@@ -1,0 +1,15 @@
+h1. Wee Cropper
+
+h2. Requirements
+
+* ImageMagick
+
+h2. About
+
+This is a lightweight JSONP cropper service which accepts cropping, resize and image location parameters. It will then resize the image and return call to the callback function specified with the public path to the resized image.
+
+This image should be then saved to your local webapp as this public image will only be available for a short time.
+
+
+MIT License
+Copyright: Alastair Brunton 2010

@@ -1,4 +1,3 @@
-# This is the main meat which will work with the
 require 'open-uri'
 require 'digest/sha1'
 class Crop
@@ -10,8 +9,7 @@ class Crop
   
   # This performs the crop based on the actual parameters.
   # 1. Get image and store it in tmp
-  # 2. Generate a resize command, run the command and save file to tmp.
-  # 3. Copy this file to S3
+  # 2. Generate a resize command, run the command and save file to public dir.
   def engage
     resize_command = generate_resize_command()
     f_name = File.basename(@local_file.path) 
@@ -41,15 +39,7 @@ class Crop
     @root + "/public/images/cropped/" + File.basename(@local_file.path) 
   end
   
-  # Must be a file.
   def get_identifier(filename)
     Digest::SHA1.hexdigest(filename + Time.now.to_s)
   end
-  
-  
-  # Generate a JSONP response to the server, with the href of the resized image.
-  def to_json
-    
-  end
-  
 end
