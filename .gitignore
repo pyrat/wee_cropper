@@ -1,2 +1,3 @@
 public/images/cropped/*
 tmp/images/*
+sinatra.log

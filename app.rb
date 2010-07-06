@@ -1,11 +1,11 @@
 require 'sinatra'
 require 'models/crop'
+# require 'logger'
 require 'sinatra/jsonp'
-require 'redgreen'
+
 
 set :root, File.dirname(__FILE__)
 
-# Make it jsonp but for now just make it HTTP
 get '/crop' do
 
   param_error = false
@@ -21,12 +21,23 @@ get '/crop' do
     crop = Crop.new(params, settings.root)
     image_filename = crop.engage
     cropped_image = "http://" + request.host_with_port + "/images/cropped/" + image_filename
-
     data = [cropped_image]
     jsonp data
   end
 end
 
 get '/' do
-  erb :index
+  # erb :index
+  "Welcome to the cropper tool."
 end
+
+
+# configure do
+#   LOGGER = Logger.new("sinatra.log") 
+# end
+#  
+# helpers do
+#   def logger
+#     LOGGER
+#   end
+# end
